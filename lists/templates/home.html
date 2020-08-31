@@ -1,18 +1,348 @@
 <html>
     <head>
-        <title>To-Do lists</title>
+        <title>Adriana Ungureanu</title>
     </head>
-    <body>
-        <h1>Your To-Do list</h1>
-        <form method="POST">
-            <input name="item_text" id="id_new_item" placeholder="Enter a to-do item" />
-            {% csrf_token %}
+    <style>
+        .btn-group button {
+          background-color: #0066ff; /* Green background */
+          border: 1px solid #000000; /* Green border */
+          color: white; /* White text */
+          padding: 10px 24px; /* Some padding */
+          cursor: pointer; /* Pointer/hand icon */
+          float: left; /* Float the buttons side by side */
+        }
+        
+        /* Clear floats (clearfix hack) */
+        .btn-group:after {
+          content: "";
+          clear: both;
+          display: table;
+        }
+        
+        .btn-group button:not(:last-child) {
+          border-right: none; /* Prevent double borders */
+        }
+        
+        /* Add a background color on hover */
+        .btn-group button:hover {
+          background-color: #29bbd4;
+        }
+        </style>
+    <body style="background-color:#f2f7f6;">
+        <h1 style="background-color:#00ffff; font-size:50px; text-align:center;" id="header_main" mane="header_main">Adriana Ungureanu
+            <div class="btn-group" style="width:100%">
+                <a href="#pd"><button name="pd2"id="pd2" style="width:16.6%">Personal Details</button></a>
+                <a href="#pp"><button name= "pp2" id="pp2" style="width:16.6%">Personal Profile</button></a>
+                <a href="#we"><button name="we2" id="we2" style="width:16.6%">Work Experience</button></a>
+                <a href="#e"><button name="e2" id="e2"style="width:16.6%">Education</button></a>
+                <a href="#i"><button name="i2" id="i2" style="width:16.6%">Interests</button></a>
+                <a href="#r"><button name="r2" id="r2" style="width:16.6%">References</button></a>
+            </div>
+        </h1>
+        <h2 id="pd" name="pd" style="font-size: medium;" >Personal details</h2>
+        <form action = "/save_pd" method="POST" style="display: none;" id="form_pd" >
+            {%csrf_token%}
+            <label id="label_pd_name">Name:</label>
+            <input type ="text" name = "name_pd" id = "name_pd"  placeholder="Alex"></input>
+            <p contenteditable = "false" name="name_pd_text" id="name_pd_text" ></p>
+            <label id="label_pd_email">Email:</label>
+            <input type ="text" name = "email_pd" id = "email_pd" placeholder="alex@gmail.com"></input>
+            <p contenteditable = "false" name="email_pd_text" id="email_pd_text" ></p>
+            <label id="label_pd_phone">Phone:</label>
+            <input type ="text" name = "phone_pd" id = "phone_pd" placeholder="0712345678"></input>
+            <p contenteditable = "false" name="phone_pd_text" id="phone_pd_text" ></p>
+            <label id="label_pd_adress">Address:</label>
+            <input type ="text" name = "adress_pd" id = "adress_pd" placeholder="28 Hubert Road"></input>
+            <p contenteditable = "false" name="adress_pd_text" id="adress_pd_text" ></p>
+           
+            <!-- <p name="id_new_item" id="id_new_item"></p> -->
+            <!-- <input type="text" name="save_pd" id="save_pd" hidden></input> -->
+            <input type="submit" name="submit_pd" id="submit_pd" hidden> </input>
+
         </form>
     
-        <table id="id_list_table">
-            {% for item in items %}
-                <tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
-            {% endfor %}  
-        </table>
+        <p>{{pd.name}}</p>
+        <p>{{pd.email}}</p>
+        <p>{{pd.phone_number}}</p>
+        <p>{{pd.adress}}</p>
+        
+        <button onclick="myEdit()" name="button1" id="button1" >Edit</button>
+        <button onclick="mySave()" id="save1" style="display: none;" >Save</button>
+        <script>
+            function myEdit(){
+                document.getElementById("save1").style.display = "inherit";
+                document.getElementById("form_pd").style.display = "inherit";
+
+            }
+        </script>
+        <script>
+            function mySave(){
+                document.getElementById("submit_pd").click();
+                document.getElementById("save1").style.display = "none";
+            }
+        </script>
+
+        <h3 id="pp" style="font-size: medium;">Personal Profile</h3>
+        <form action = "/save_pp" method="POST" style="display: none;" id="form_pp" >
+            {%csrf_token%}
+            <p contenteditable="false" name="description_pp_text" id="description_pp_text" ></p>
+            <input type="text" name="description_pp" id="description_pp" ></input>
+            <input type="submit" name="submit_pp" id="submit_pp" hidden> </input>
+        </form>
+
+        <p>{{pp.description}}</p>
+        <!-- <p name="text_pp" id="text_pp"></p> -->
+        <button onclick="EditPp()" id="button2">Edit</button>
+        <button onclick="SavePp()" id="save2" style="display:none">Save</button>
+        <script>
+            function EditPp(){
+                // document.getElementById("description_pp_text").contentEditable ="true";
+                document.getElementById("save2").style.display = "inherit";
+                document.getElementById("form_pp").style.display = "inherit";
+            }
+            function SavePp(){
+                // document.getElementById("description_pp").innerText = document.getElementById("description_pp").innerText
+                document.getElementById("submit_pp").click();
+                document.getElementById("save2").style.display = "none";
+            }
+        </script>
+
+        <h1 id="we" style="font-size: medium;">Work Experience</h1>
+        <form action="/save_we" method="POST" style="display: none;" id="form_we">
+            {%csrf_token%}
+            <label>Company:</label>
+            <input type="text" name="company_we" id="company_we"></input>
+
+            <label>Job title</label>
+            <input type="text" name="job_we" id="job_we"></input>
+
+            <label>Description</label>
+            <input type="text" name="description_we" id="description_we"></input>
+
+            <input type="submit" name="submit_we" id="submit_we" hidden></input>
+        </form>
+
+        <form action="/edit_we" method="POST" style="display: none;" id="form_edit_we">
+            {%csrf_token%}
+            <label>Company:</label>
+            <input type="text" name="company_edit_we" id="company_edit_we"></input>
+
+            <label>Job title</label>
+            <input type="text" name="job_edit_we" id="job_edit_we"></input>
+
+            <label>Description</label>
+            <input type="text" name="description_edit_we" id="description_edit_we"></input>
+
+            <input type="text" name="id_we" id="id_we" hidden></input>
+            <input type="submit" name="submit_edit_we" id="submit_edit_we"></input>
+        </form>
+        {%for ws in w%}
+        <p name="input1_we" id="{{ws.id}}">{{ws.company}}</p>
+        <p name="input2_we">{{ws.job}}</p>
+        <p name ="input3_we">{{ws.description}}</p>
+        <button onclick="EditWE1('{{ws.id}}')" id="edit_{{ws.id}}">Edit</button>
+        {%endfor%}
+        <button onclick="EditWE()" id="button3">Add</button>
+        <button onclick="SaveWE()" id="save3" style="display: none;" >Save</button>
+        <script>
+            // function hello() {
+            //     console.log("hello")
+            // }
+
+            function EditWE(){
+                document.getElementById("save3").style.display = "inherit";
+                document.getElementById("form_we").style.display = "inherit";
+                
+            }
+            function SaveWE(){
+                document.getElementById("submit_we").click();
+                document.getElementById("save3").style.display = "none";
+            }
+            function EditWE1(a){
+                // document.getElementById("save_"+a).style.display = "inherit";
+                document.getElementById("form_edit_we").style.display = "inherit";
+                document.getElementById("id_we").value = a
+            }
+        </script>
+
+        <h5 id="e" style="font-size: medium;">Education</h5>
+        <form action = "/save_e" method = "POST" style="display: none;" id="form_e">
+            {%csrf_token%}
+            <label>Institution:</label>
+            <input type="text" name="school_e" id="school_e"></input>
+            <p contenteditable="false" name="school_e_text" id="school_e_text"></p>
+
+            <label>Subject:</label>
+            <input type="text" name="subject_e" id="subject_e"></input>
+            <p contenteditable="false" name="subject_e_text" id="subject_e_text"></p>
+
+            <label>Start of course</label>
+            <input type="date" name="start_e" id="start_e"></input>
+            <p contenteditable="false" name ="start_e_text" id="start_e_text"></p>
+
+            <label>End of course</label>
+            <input type="date" name ="end_e" id="end_e"></input>
+            <p contenteditable="false" name="end_e_text" id="end_e_text"></p>
+
+            <input type="submit" name="submit_e" id="submit_e" hidden></input>
+            
+        </form>
+
+        <form action = "/edit_e" method="POST" style="display: none;" id="form_edit_e">
+            {%csrf_token%}
+            <label>Institution:</label>
+            <input type="text" name="school_edit_e" id="school_edit_e"></input>
+            <p contenteditable="false" name="school_edit_e_text" id="school_edit_e_text"></p>
+
+            <label>Subject:</label>
+            <input type="text" name="subject_edit_e" id="subject_edit_e"></input>
+            <p contenteditable="false" name="subject_edit_e_text" id="subject_edit_e_text"></p>
+
+            <label>Start of course</label>
+            <input type="date" name="start_edit_e" id="start_edit_e"></input>
+            <p contenteditable="false" name ="start_edit_e_text" id="start_edit_e_text"></p>
+
+            <label>End of course</label>
+            <input type="date" name ="end_edit_e" id="end_edit_e"></input>
+            <p contenteditable="false" name="end_edit_e_text" id="end_edit_e_text"></p>
+
+            <input type="text" name="id_e" id="id_e" hidden></input>
+
+            <input type="submit" name="submit_edit_e" id="submit_edit_e" ></input>
+
+        </form>
+        {%for ed in e%}
+        <p name="input_e" id="{{ed.id}}">{{ed.school}} {{ed.subject}} {{ed.start}} - {{ed.end}}</p>
+        <button onclick="EditE1('{{ed.id}}')" id="edit_{{ed.id}}">Edit</button>
+        <!-- <button onclick="hello()" id="edit_{{ed.id}}">Edit</button> -->
+        
+        <!-- <button onclick="SaveE1('{{ed.id}}')" id="save_{{ed.id}}" style="display: none;">Save</button> -->
+        {%endfor%}
+        <button onclick="EditE()" id="button4">Add</button>
+        <button onclick="SaveE()" id="save4" style="display: none;" >Save</button>
+        <script>
+            function hello() {
+                console.log("hello")
+            }
+
+            function EditE(){
+                document.getElementById("save4").style.display = "inherit";
+                document.getElementById("form_e").style.display = "inherit";
+                
+            }
+            function SaveE(){
+                document.getElementById("submit_e").click();
+                document.getElementById("save4").style.display = "none";
+            }
+            function EditE1(a){
+                // document.getElementById("save_"+a).style.display = "inherit";
+                document.getElementById("form_edit_e").style.display = "inherit";
+                document.getElementById("id_e").value = a
+            }
+            // function SaveE1(a){
+            //     document.getElementById("submit_edit_e").click();
+            //     document.getElementById("save_"+ a).style.display = "none";
+            // }
+        </script>
+
+        <h6 id="i" style="font-size: medium;">Interests</h6>
+        <form action="/save_i" method="POST" style="display: none;" id="form_i">
+            {%csrf_token%}
+            <label>Hobbies:</label>
+            <input type="text" name="interests_i" id="interests_i"></input>
+            <input type="submit" name="submit_i" id="submit_i" hidden></input>
+        </form>
+
+        <form action = "/edit_i" method="POST" style="display: none;" id="form_edit_i">
+            {%csrf_token%}
+            <label>Hobbies:</label>
+            <input type="text" name="interests_edit_i" id="interests_edit_i"></input>
+
+            <input type="text" name="id_i" id="id_i" hidden></input>
+            <input type="submit" name="submit_edit_i" id="submit_edit_i" ></input>
+        </form>
+
+        {%for is in i%}
+        <p name="input_i" id={{is.id}}>{{is.interest}}</p>
+        <button onclick="EditI1('{{is.id}}')" id="edit_i_{{is.id}}">Edit</button>
+        {%endfor%}
+        <button onclick="EditI()" id="button5">Add</button>
+        <button onclick="SaveI()" id="save5" style="display: none;" >Save</button>
+        <script>
+            function EditI(){
+                document.getElementById("save5").style.display = "inherit";
+                document.getElementById("form_i").style.display = "inherit";
+            }
+
+            function SaveI(){
+                document.getElementById("submit_i").click();
+                document.getElementById("save5").style.display = "none"; 
+            }
+            function EditI1(a){
+                // document.getElementById("save_"+a).style.display = "inherit";
+                document.getElementById("form_edit_i").style.display = "inherit";
+                document.getElementById("id_i").value = a
+            }
+        </script>
+        
+        <h1 id="r" style="font-size: medium;">References</h1>
+        <form action="/save_r" method="POST" style="display: none;" id="form_r">
+            {%csrf_token%}
+            <label>Name</label>
+            <input type="text" name="nameRef_r" id="nameRef_r"></input>
+
+            <label>Phone</label>
+            <input type="text" name="phoneRef_r" id="phoneRef_r"></input>
+
+            <label>Email</label>
+            <input type="text" name="emailRef_r" id="emailRef_r"></input>
+
+            <input type="submit" name="submit_r" id="submit_r" hidden></input>
+        </form>
+
+        <form action = "/edit_r" method="POST" style="display: none;" id="form_edit_r">
+            {%csrf_token%}
+            <label>Name</label>
+            <input type="text" name="nameRef_edit_r" id="nameRef_edit_r"></input>
+
+            <label>Phone</label>
+            <input type="text" name="phoneRef_edit_r" id="phoneRef_edit_r"></input>
+
+            <label>Email</label>
+            <input type="text" name="emailRef_edit_r" id="emailRef_edit_r"></input>
+
+            <input type="text" name="id_r" id="id_r" hidden></input>
+            <input type="submit" name="submit_edit_r" id="submit_edit_r" ></input>
+            
+        </form>
+        
+        {%for rs in r%}
+        
+        <p name="input_i" id={{rs.id}}>{{rs.name}} {{rs.phone}} {{rs.email}}</p>
+        <button onclick="EditR1('{{rs.id}}')" id="edit_R_{{rs.id}}">Edit</button>
+        
+        {%endfor%}
+        
+        <button onclick="EditR()" id="button6">Add</button>
+        <button onclick="SaveR()" id="save6" style="display: none;" >Save</button>
+        <script>
+            function EditR(){
+                document.getElementById("save6").style.display = "inherit";
+                document.getElementById("form_r").style.display = "inherit";
+            }
+
+            function SaveR(){
+                document.getElementById("submit_r").click();
+                document.getElementById("save6").style.display = "none"; 
+            }
+            function EditR1(a){
+                // document.getElementById("save_"+a).style.display = "inherit";
+                document.getElementById("form_edit_r").style.display = "inherit";
+                document.getElementById("id_r").value = a
+            }
+        </script>
+
+
+       
     </body>
 </html>
